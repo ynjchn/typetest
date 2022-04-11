@@ -1,0 +1,42 @@
+.maincontent {
+  text-align: center;
+}
+
+.test-input {
+  width: 100%;
+  border: 0px;
+  margin-top: 10px;
+  background-color: rgb(213, 213, 213);
+  font-size: 20px;
+}
+
+input:focus {
+  outline-width: 0px;
+}
+
+.test-area {
+  margin: auto;
+  margin-top: 10%;
+  border-radius: 5px;
+  text-align: left;
+  border: 1px solid black;
+  width: 25%;
+  padding: 10px;
+}
+
+.correct {
+  color: rgb(58, 198, 142)
+}
+
+.incorrect {
+  color: rgb(219, 70, 95);
+}
+
+.active {
+  color: black;
+}
+
+.inactive {
+  color: grey;
+}
+

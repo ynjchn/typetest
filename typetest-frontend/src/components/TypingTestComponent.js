@@ -1,8 +1,9 @@
 import React, { useState, useRef, memo, useEffect } from 'react'
+import {Link} from "react-router-dom"
 
 const TypingTestComponent = () => {
 
-    const wordBank = () => `the be to of and a in that have I it for not on with as you do at this but his by from they we say her she or an will my one all would there their  what so up out if about who get which go me when make can like time no just him know take people into year`
+    const wordBank = () => `he be to of and a in that have I it for not on with as you do at this but his by from they we say her she or an will my one all would there their  what so up out if about who get which go me when make can like time no just him know take people into year`
         .split(' ').sort(() => Math.random() > 0.5 ? 1 : -1) 
 
     const [userInput, setUserInput] = useState('')
@@ -83,27 +84,36 @@ const TypingTestComponent = () => {
     }, [isTimeRunning])
     
     console.log(isTimeRunning)
-    return (
-        <div className="maincontent">
-            <div className = "test-area">
-                <p>{speed} WPM</p>
-                {currWord.current.map((word, index) => {
-                    return <Word 
-                            text={word} 
-                            active={index === currWordIndex}
-                            correct={correctWords[index]}
-                            />
-                })}
-                {/* <p>{currWordIndex} {currWord.current.length} </p> */}
-                <input 
-                    className="test-input"
-                    type="text" 
-                    value={userInput}
-                    onChange={(e) => checkInput(e.target.value)}
-                />
+    if(!isTestFinished) {
+        return (
+            <div className="maincontent">
+                <div className = "test-area">
+                    {currWord.current.map((word, index) => {
+                        return <Word 
+                                text={word} 
+                                active={index === currWordIndex}
+                                correct={correctWords[index]}
+                                />
+                    })}
+                    {/* <p>{currWordIndex} {currWord.current.length} </p> */}
+                    <input 
+                        className="test-input"
+                        type="text" 
+                        value={userInput}
+                        onChange={(e) => checkInput(e.target.value)}
+                        autoFocus
+                    /> 
+                </div>
             </div>
-        </div>
-    )
+        )
+    } else if(isTestFinished) {
+        return (
+            <div className="maincontent">
+                <p>{speed} WPM </p>
+                <a href="/"><button className="restart-button">Restart</button></a>
+            </div>
+        )
+    }
 }
 
 export default TypingTestComponent

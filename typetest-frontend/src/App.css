@@ -1,5 +1,10 @@
 .maincontent {
   text-align: center;
+  margin: auto;
+  margin-top: 10%;
+  border-radius: 5px;
+  border: 1px solid black;
+  width: 25%;
 }
 
 .test-input {
@@ -8,20 +13,20 @@
   margin-top: 10px;
   background-color: rgb(213, 213, 213);
   font-size: 20px;
+  border-radius: 5px;
 }
+
 
 input:focus {
   outline-width: 0px;
 }
 
 .test-area {
-  margin: auto;
-  margin-top: 10%;
-  border-radius: 5px;
+
   text-align: left;
-  border: 1px solid black;
-  width: 25%;
+
   padding: 10px;
+  font-size: 20px;
 }
 
 .correct {
@@ -40,3 +45,9 @@ input:focus {
   color: grey;
 }
 
+.restart-button {
+   margin-bottom: 15px;
+   background-color: white;
+   border-radius: 5px;
+   font-size: 15px;
+}

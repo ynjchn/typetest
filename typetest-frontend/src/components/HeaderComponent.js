@@ -2,7 +2,9 @@ import React from 'react'
 
 const HeaderComponent = () => {
   return (
-    <div></div>
+    <div className="header">
+        <a href="/">Type Test</a>
+    </div>
   )
 }
 

@@ -1,16 +1,15 @@
 .maincontent {
   text-align: center;
   margin: auto;
-  margin-top: 10%;
   border-radius: 5px;
   border: 1px solid black;
   width: 25%;
+  padding: 10px;
 }
 
 .test-input {
   width: 100%;
   border: 0px;
-  margin-top: 10px;
   background-color: rgb(213, 213, 213);
   font-size: 20px;
   border-radius: 5px;
@@ -25,7 +24,6 @@ input:focus {
 
   text-align: left;
 
-  padding: 10px;
   font-size: 20px;
 }
 
@@ -46,8 +44,26 @@ input:focus {
 }
 
 .restart-button {
-   margin-bottom: 15px;
    background-color: white;
    border-radius: 5px;
    font-size: 15px;
+}
+
+.header {
+  font-size: 20px;
+  text-align: left;
+  margin: auto;
+  margin-top: 10%;
+  border-radius: 5px;
+  width: 25%;
+}
+
+.header a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.username-input {
+  margin-bottom: 20px;
 }

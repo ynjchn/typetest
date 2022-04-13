@@ -1,9 +1,11 @@
+import axios from 'axios'
 import React, { useState, useRef, memo, useEffect } from 'react'
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
+import TyperService from '../services/TyperService'
 
 const TypingTestComponent = () => {
 
-    const wordBank = () => `he be to of and a in that have I it for not on with as you do at this but his by from they we say her she or an will my one all would there their  what so up out if about who get which go me when make can like time no just him know take people into year`
+    const wordBank = () => `he be to of and`
         .split(' ').sort(() => Math.random() > 0.5 ? 1 : -1) 
 
     const [userInput, setUserInput] = useState('')
@@ -13,7 +15,22 @@ const TypingTestComponent = () => {
     const [isTestFinished, setIsTestFinished] = useState(false)
     const [timeElapsed, setTimeElapsed] = useState(0)
     const [speed, setSpeed] = useState(0)
+    const [typers, setTypers] = useState([])
+    const [username, setUsername] = useState('')
+    const [speeds, setSpeeds] = useState([])
     const currWord = useRef(wordBank())
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        
+        TyperService.getAllTypers().then((response) => {
+            setTypers(response.data)
+            console.log(response.data);
+        }).catch(error => {
+            console.log(error);
+        })
+
+    }, [])
 
     function checkInput(value) {
         
@@ -82,8 +99,52 @@ const TypingTestComponent = () => {
             clearInterval(id)
         }
     }, [isTimeRunning])
-    
-    console.log(isTimeRunning)
+
+    useEffect(() => {
+        
+        TyperService.getAllTypers().then((response) => {
+            setTypers(response.data)
+            console.log(response.data);
+        }).catch(error => {
+            console.log(error);
+        })
+
+    }, [])
+
+    const addScore = (e) => {
+        
+        for(let i = 0; i < typers.length; i++) {
+            let speeds = (typers[i].speeds)
+            console.log(typers[i])
+            console.log("speeds", speeds)
+            if(typers[i].username === username) {
+                console.log("match found")
+                speeds.push(speed)
+                const submittedTyper = {username, speeds}
+                console.log(submittedTyper)
+                console.log("speeds after", speeds)
+                TyperService.updateTyper(typers[i].id, submittedTyper).then((response) => {
+                    window.location.reload()
+                }).catch(error => {
+                    console.log(error)
+                })
+                return
+            }
+        }
+        console.log("user not fouund")
+        const speeds = [speed]
+        const submittedTyper = {username, speeds}
+        console.log("new user speed", speeds)
+        console.log(submittedTyper)
+
+        TyperService.createTyper(submittedTyper).then((response) =>{
+            window.location.reload()
+        }).catch(error => {
+            console.log(error)
+        })
+        return
+    }
+
     if(!isTestFinished) {
         return (
             <div className="maincontent">
@@ -95,7 +156,6 @@ const TypingTestComponent = () => {
                                 correct={correctWords[index]}
                                 />
                     })}
-                    {/* <p>{currWordIndex} {currWord.current.length} </p> */}
                     <input 
                         className="test-input"
                         type="text" 
@@ -110,7 +170,21 @@ const TypingTestComponent = () => {
         return (
             <div className="maincontent">
                 <p>{speed} WPM </p>
-                <a href="/"><button className="restart-button">Restart</button></a>
+                <input
+                    className="username-input"
+                    type="text"
+                    placeholder="Enter name"
+                    name = "username"
+                    value = {username}
+                    onChange = {(e) => setUsername(e.target.value)}
+                ></input>
+                <button 
+                    className="submit-button"
+                    onClick = {(e) => addScore(e)}
+                > 
+                    Submit score
+                </button>
+                <p><a href="/"><button className="restart-button">Restart</button></a></p>
             </div>
         )
     }
